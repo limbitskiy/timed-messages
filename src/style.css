@@ -1,0 +1,52 @@
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --accent-color: #E4F0ED
+  --gray-color: #F6F8FA
+  --green-gradient: linear-gradient(90deg, #04694B 0%, #11A87B 100%);
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+  margin: 0;
+  background-color: #F9FAFB;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+legend {
+  float: none;
+  width: initial;
+}
+
+fieldset {
+  border: 1px solid;
+}
+
+input {
+  border: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+li.selected {
+  outline: 1px solid red;
+}
+
+.custom-modal {
+  box-shadow: 0px 5px 42px rgba(33, 35, 37, 0.12);
+  border-radius: 8px;
+  border: none;
+}
