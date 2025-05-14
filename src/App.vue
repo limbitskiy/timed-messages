@@ -1,8 +1,27 @@
 <template>
-  <BModal v-model="modalVisible" no-backdrop centered content-class="custom-modal">
-    <MessageOutput :message="currentMessage" />
-    <MessageList :messages="messages" :allowedMessageIndexes="allowedMessageIndexes" @remove="onRemoveMessage" />
-    <MessageCreationInput v-model="newMessageText" @submit="onCreateMessage" />
+  <BModal
+    v-model="modalVisible"
+    no-backdrop
+    no-header
+    no-footer
+    centered
+    content-class="custom-modal"
+  >
+    <div class="inner-container d-flex flex-column gap-4 overfwlow-hidden">
+      <MessageOutput
+        :message="currentMessage"
+        @remove="onRemoveCurrentFromLoop"
+      />
+      <MessageList
+        :messages="messages"
+        :allowedMessageIndexes="allowedMessageIndexes"
+        @add="onAddToLoop"
+      />
+      <MessageCreationInput
+        v-model="newMessageText"
+        @submit="onCreateMessage"
+      />
+    </div>
   </BModal>
 </template>
 
@@ -24,7 +43,9 @@ const newMessageText = ref("");
 const idCounter = ref(0);
 let interval: ReturnType<typeof setInterval>;
 
-const currentMessage = computed(() => messages.value.find((msg) => msg.id === currentMessageId.value));
+const currentMessage = computed(() =>
+  messages.value.find((msg) => msg.id === currentMessageId.value)
+);
 
 const onCreateMessage = () => {
   const newMessage = createNewMessage(newMessageText.value);
@@ -33,12 +54,14 @@ const onCreateMessage = () => {
   newMessageText.value = "";
 };
 
-const onRemoveMessage = (messageId: number) => {
-  if (allowedMessageIndexes.value.includes(messageId)) {
-    allowedMessageIndexes.value = allowedMessageIndexes.value.filter((id) => id !== messageId);
-    return;
-  }
+const onAddToLoop = (messageId: number) => {
   allowedMessageIndexes.value.push(messageId);
+};
+
+const onRemoveCurrentFromLoop = () => {
+  allowedMessageIndexes.value = allowedMessageIndexes.value.filter(
+    (id) => id !== currentMessageId.value
+  );
 };
 
 const createNewMessage = (messageText: string) => {
@@ -58,11 +81,16 @@ const cycleMessages = () => {
   interval = setInterval(() => {
     allowedMessageIndexes.value.sort();
 
-    const currentMessageIdx = allowedMessageIndexes.value.findIndex((id) => id === currentMessageId.value);
+    const currentMessageIdx = allowedMessageIndexes.value.findIndex(
+      (id) => id === currentMessageId.value
+    );
 
-    const nextMessageIdx = allowedMessageIndexes.value[currentMessageIdx + 1] ?? allowedMessageIndexes.value[0];
+    const nextMessageIdx =
+      allowedMessageIndexes.value[currentMessageIdx + 1] ??
+      allowedMessageIndexes.value[0];
+    console.log("🚀 ~ interval=setInterval ~ nextMessageIdx:", nextMessageIdx);
     currentMessageId.value = nextMessageIdx;
-  }, 1000);
+  }, 3000);
 };
 
 onMounted(() => {

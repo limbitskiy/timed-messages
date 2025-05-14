@@ -1,13 +1,13 @@
 <template>
   <!-- <div :class="$style['message-input']"> -->
-  <BForm class="d-flex flex-row align-items-end" @submit.prevent="emit('submit')">
+  <BForm class="d-flex flex-row align-items-end justify-content-between gap-2 flex-wrap" @submit.prevent="emit('submit')">
     <!-- <BFormInput id="input-1" v-model.trim="inputModel" type="text" placeholder="Enter message" required />
     <div class="col-lg-3 my-2"> -->
-    <fieldset>
+    <fieldset class="flex-grow-1">
       <legend>Новое сообщение</legend>
-      <input v-model.trim="inputModel" />
+      <input v-model.trim="inputModel" class="custom-new-message-input"/>
     </fieldset>
-    <BButton type="submit" variant="primary">Click me</BButton>
+    <BButton type="submit" variant="success" class="custom-button">Отправить</BButton>
     <!-- </div> -->
   </BForm>
   <!-- </div> -->

@@ -1,0 +1,94 @@
+$primary: #e4f0ed;
+$secondary: #f6f8fa;
+@import "bootstrap";
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --accent-color: #e4f0ed;
+  --gray-color: #f6f8fa;
+  --grey-text: #8b939c;
+  --grey-border: #dee2e8;
+  --green-gradient: linear-gradient(90deg, #04694b 0%, #11a87b 100%);
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+  font-size: 14px;
+  margin: 0;
+  background-color: #f9fafb;
+}
+
+legend {
+  float: none;
+  width: initial;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--grey-text);
+  margin-left: 0.5rem;
+}
+
+fieldset {
+  border: 1px solid var(--grey-border);
+  border-radius: 6px;
+}
+
+ul {
+  list-style: none;
+}
+
+input {
+  border: none;
+  color: #2b312c;
+}
+
+input:focus {
+  outline: none;
+}
+
+button.hidden {
+  visibility: hidden;
+}
+
+.custom-button {
+  background: linear-gradient(90deg, #04694b 0%, #11a87b 100%);
+  border: none;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 17px 50px;
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
+}
+
+.modal {
+  overflow: hidden;
+}
+
+.custom-modal {
+  box-shadow: 0px 5px 42px rgba(33, 35, 37, 0.12);
+  border-radius: 8px;
+  border: none;
+  overflow: hidden;
+}
+
+.custom-new-message-input {
+  padding: 2px 14px 14px;
+}
+
+.message-list {
+  overflow-y: auto;
+}
+
+.inner-container {
+  height: min(90dvh, 430px);
+}
