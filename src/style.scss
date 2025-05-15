@@ -1,7 +1,3 @@
-$primary: #e4f0ed;
-$secondary: #f6f8fa;
-@import "bootstrap";
-
 :root {
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -9,7 +5,7 @@ $secondary: #f6f8fa;
   -moz-osx-font-smoothing: grayscale;
 
   --accent-color: #e4f0ed;
-  --gray-color: #f6f8fa;
+  --grey-color: #f6f8fa;
   --grey-text: #8b939c;
   --grey-border: #dee2e8;
   --green-gradient: linear-gradient(90deg, #04694b 0%, #11a87b 100%);
@@ -62,6 +58,25 @@ button.hidden {
   font-size: 12px;
 }
 
+.bg-accent {
+  background-color: var(--accent-color);
+}
+
+.bg-grey {
+  background-color: var(--grey-color);
+}
+
+.message-list-item {
+  transition: 0.5s ease;
+  border-radius: 6px;
+  padding: 0.5rem;
+}
+
+.message-list-item.selected {
+  transform: translate(-5px, 5px);
+  box-shadow: 2px 2px 4px 4px #0000000f;
+}
+
 .custom-button {
   background: linear-gradient(90deg, #04694b 0%, #11a87b 100%);
   border: none;
@@ -79,6 +94,10 @@ button.hidden {
   overflow: hidden;
 }
 
+.modal-inner-container {
+  height: min(90dvh, 430px);
+}
+
 .custom-modal {
   box-shadow: 0px 5px 42px rgba(33, 35, 37, 0.12);
   border-radius: 8px;
@@ -94,6 +113,6 @@ button.hidden {
   overflow-y: auto;
 }
 
-.inner-container {
-  height: min(90dvh, 430px);
+.message-output {
+  height: 87px;
 }

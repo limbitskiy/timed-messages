@@ -8,10 +8,20 @@
     centered
     content-class="custom-modal"
   >
-    <div class="inner-container d-flex flex-column gap-4 overfwlow-hidden">
+    <div
+      class="modal-inner-container d-flex flex-column gap-4 overfwlow-hidden"
+    >
       <MessageOutput :message="currentMessage" @remove="removeFromAllowed" />
-      <MessageList :messages="messages" :allowedMessageIndexes="allowedMessages" @add="addToAllowed" />
-      <MessageCreationInput v-model="newMessageText" @submit="() => onCreateMessage(newMessageText)" />
+      <MessageList
+        :messages="messages"
+        :current="currentMessage"
+        :allowedMessageIndexes="allowedMessages"
+        @add="addToAllowed"
+      />
+      <MessageCreationInput
+        v-model="newMessageText"
+        @submit="() => onCreateMessage(newMessageText)"
+      />
     </div>
   </BModal>
 </template>
@@ -69,5 +79,3 @@ onUnmounted(() => {
   clearInterval(interval);
 });
 </script>
-
-<style lang="scss" module></style>
