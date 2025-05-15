@@ -1,46 +1,66 @@
 import { ref } from "vue";
 
 export const useLoopMessages = () => {
-  const currentId = ref<number | null>(null);
+  const current = ref(null);
   const messages = ref([]);
   const allowedMessages = ref(new Set());
 
   const addMessage = (message) => {
     messages.value.push(message);
 
-    if (!currentId.value) {
-      currentId.value = message.id;
+    if (!current.value) {
+      current.value = message;
     }
   };
 
   const addToAllowed = (messageId: number) => {
     allowedMessages.value.add(messageId);
-  };
 
-  const removeFromAllowed = (messageId: number) => {
-    allowedMessages.value.delete(messageId);
-  };
-
-  const next = (idx) => {
-    const currentIdx = messages.value.findIndex((msg) => msg.id === currentId);
-
-    const nextMessage = messages.value[currentIdx + 1];
-
-    if (allowedMessages.value.has(nextMessage.id)) {
-      next();
+    if (!current.value) {
+      const message = messages.value.find((msg) => msg.id === messageId);
+      current.value = message;
     }
-    //   allowedMessageIndexes.value.sort();
-    //   const currentx = allowedMessageIndexes.value.findIndex((id) => id === current.value);
-    //   const nextMessageIdx = allowedMessageIndexes.value[currentx + 1] ?? allowedMessageIndexes.value[0];
-    //   console.log("🚀 ~ interval=setInterval ~ nextMessageIdx:", nextMessageIdx);
-    //   current.value = nextMessageIdx;
+  };
+
+  const removeFromAllowed = () => {
+    if (current.value) {
+      allowedMessages.value.delete(current.value.id);
+    }
+  };
+
+  const next = () => {
+    if (!messages.value) {
+      console.error(`No messages in queue`);
+      return;
+    }
+
+    if (!allowedMessages.value.size) {
+      console.warn(`No items to loop over`);
+      current.value = null;
+      return;
+    }
+
+    const startIdx = messages.value.findIndex((msg) => msg.id === current.value.id);
+    const length = messages.value.length;
+
+    for (let i = 1; i < length; i++) {
+      const idx = (startIdx + i) % length;
+      const message = messages.value[idx];
+
+      if (allowedMessages.value.has(message.id)) {
+        current.value = message;
+        break;
+      }
+    }
   };
 
   return {
-    current,
-    loop,
-    add,
-    remove,
+    addMessage,
     next,
+    addToAllowed,
+    removeFromAllowed,
+    allowedMessages,
+    current,
+    messages,
   };
 };

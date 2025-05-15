@@ -8,7 +8,12 @@
         />
       </svg>
     </button>
-    <span>{{ message?.text }}</span>
+    <div class="top d-flex flex-column">
+      <span>{{ message?.text }}</span>
+      <span v-if="message" class="text-sm text-muted"
+        >({{ message?.createdAtDate + " / " + message?.createdAtTime }})</span
+      >
+    </div>
   </div>
 </template>
 

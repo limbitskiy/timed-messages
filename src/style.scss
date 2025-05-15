@@ -33,6 +33,7 @@ legend {
   font-weight: 500;
   color: var(--grey-text);
   margin-left: 0.8rem;
+  margin-bottom: 0.1rem;
 }
 
 fieldset {
@@ -57,13 +58,17 @@ button.hidden {
   visibility: hidden;
 }
 
+.text-sm {
+  font-size: 12px;
+}
+
 .custom-button {
   background: linear-gradient(90deg, #04694b 0%, #11a87b 100%);
   border: none;
   text-transform: uppercase;
   font-weight: 600;
   font-size: 14px;
-  padding: 18px 50px 16px;
+  padding: 15px 50px 13px;
 
   @media (max-width: 500px) {
     width: 100%;
@@ -82,7 +87,7 @@ button.hidden {
 }
 
 .custom-new-message-input {
-  padding: 2px 14px 14px;
+  padding: 2px 14px 12px;
 }
 
 .message-list {

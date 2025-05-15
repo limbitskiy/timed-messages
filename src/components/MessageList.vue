@@ -1,9 +1,9 @@
 <template>
   <ul class="message-list d-flex flex-column gap-2 bg-secondary p-4 rounded-2 flex-grow-1">
-    <li v-for="message in messages" :key="message.id" class="d-flex align-items-center gap-2">
+    <li v-for="message in messages" :key="message.id" class="d-flex gap-2">
       <button
         class="border-0 bg-transparent"
-        :class="{ hidden: allowedMessageIndexes.includes(message.id) }"
+        :class="{ hidden: allowedMessageIndexes.has(message.id) }"
         @click="emit('add', message.id)"
       >
         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -13,9 +13,10 @@
           />
         </svg>
       </button>
-
-      <span>{{ message.text }}</span>
-      <!-- <span>{{ message.id }}</span> -->
+      <div class="top d-flex flex-column">
+        <span>{{ message.text }}</span>
+        <span class="text-sm text-muted">({{ message.createdAtDate + " / " + message.createdAtTime }})</span>
+      </div>
     </li>
   </ul>
 </template>
@@ -29,6 +30,6 @@ const emit = defineEmits<{
 
 defineProps<{
   messages: Message[];
-  allowedMessageIndexes: number[];
+  allowedMessageIndexes: Set<number>;
 }>();
 </script>

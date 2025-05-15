@@ -9,9 +9,9 @@
     content-class="custom-modal"
   >
     <div class="inner-container d-flex flex-column gap-4 overfwlow-hidden">
-      <MessageOutput :message="currentMessage" @remove="onRemoveCurrentFromLoop" />
-      <MessageList :messages="messages" :allowedMessageIndexes="loop" @add="onAddToLoop" />
-      <MessageCreationInput v-model="newMessageText" @submit="onCreateMessage" />
+      <MessageOutput :message="currentMessage" @remove="removeFromAllowed" />
+      <MessageList :messages="messages" :allowedMessageIndexes="allowedMessages" @add="addToAllowed" />
+      <MessageCreationInput v-model="newMessageText" @submit="() => onCreateMessage(newMessageText)" />
     </div>
   </BModal>
 </template>
@@ -26,25 +26,30 @@ import MessageCreationInput from "./components/MessageCreationInput.vue";
 import { Message } from "./models/Message";
 import { useLoopMessages } from "./composables/useLoopMessages";
 
-const modalVisible = ref(true);
-const messages = ref<Message[]>([]);
+const modalVisible = ref(false);
 const newMessageText = ref("");
-const idCounter = ref(0);
 let interval: ReturnType<typeof setInterval>;
 
-const { current: currentMessageId, loop, add: addToLoop, remove, next } = useLoopMessages();
+const {
+  current: currentMessage,
+  allowedMessages,
+  messages,
+  next,
+  addMessage,
+  addToAllowed,
+  removeFromAllowed,
+} = useLoopMessages();
 
-const currentMessage = computed(() => messages.value.find((msg) => msg.id === currentMessageId.value));
-
-const createNewMessage = (messageText: string) => {
-  return new Message({ id: ++idCounter.value, text: messageText });
+const onCreateMessage = (messageText: string) => {
+  const message = new Message({ id: messages.value.length, text: messageText });
+  addToAllowed(message.id);
+  addMessage(message);
+  newMessageText.value = "";
 };
 
 const init = () => {
   for (let i = 0; i < 3; i++) {
-    const message = createNewMessage(`Message number ${i}`);
-    addToLoop(message.id);
-    messages.value.push(message);
+    onCreateMessage(`Message number ${i}`);
   }
 
   interval = setInterval(() => {
@@ -54,6 +59,10 @@ const init = () => {
 
 onMounted(() => {
   init();
+
+  setTimeout(() => {
+    modalVisible.value = true;
+  }, 300);
 });
 
 onUnmounted(() => {
